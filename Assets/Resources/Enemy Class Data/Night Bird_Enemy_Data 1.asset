@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c58eee2a8e96f4ba3f660985a1d501, type: 3}
+  m_Name: Night Bird_Enemy_Data 1
+  m_EditorClassIdentifier: 
+  className: Night Bird
+  enemyID: NightBird15
+  isEnemy: 1
+  icon: {fileID: 2129332086, guid: 4dc56acd1cff0534e8bfd20504d46c17, type: 3}
+  level: 15
+  baseHP: 250
+  HPGrowth: 100
+  baseAttack: 70
+  attackGrowth: 100
+  baseDefense: 15
+  defenseGrowth: 0
+  baseSpeed: 230
+  speedGrowth: 0
+  baseMaxMP: 100
+  baseStartingMP: 100
+  baseCritRate: 50
+  baseCritDamage: 50
+  moveset:
+  - order: 1
+    TacticID: Default
+    argument: 0
+    AttackID: BasicAttack

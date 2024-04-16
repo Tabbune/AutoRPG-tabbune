@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdfe08b54f02ef489256956532b4f1a, type: 3}
+  m_Name: Ranger_Class_Data
+  m_EditorClassIdentifier: 
+  className: Ranger
+  isEnemy: 0
+  icon: {fileID: 229372582, guid: 802c2093bdd90bd478a564c249dfc406, type: 3}
+  baseHP: 880
+  HPGrowth: 50
+  baseAttack: 100
+  attackGrowth: 10
+  baseDefense: 8
+  defenseGrowth: 1
+  baseSpeed: 110
+  speedGrowth: 2
+  baseMaxMP: 100
+  baseStartingMP: 100
+  baseMPRegen: 10
+  baseCritRate: 20
+  baseCritDamage: 70
+  passiveAggroGain: -15
+  learnset:
+  - attackID: BasicAttack
+    learnLevel: 1
+  - attackID: TangleStrike
+    learnLevel: 5
+  - attackID: PoisonStrike
+    learnLevel: 8

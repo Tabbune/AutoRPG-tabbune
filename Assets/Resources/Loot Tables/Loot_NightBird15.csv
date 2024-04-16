@@ -1,0 +1,13 @@
+ItemID;Type;Left;Total
+BronzeIngot;Consumable;50;50
+SilverIngot;Consumable;10;10
+IronPlate;Equipment;3;3
+IronBoots;Equipment;3;3
+IronHelmet;Equipment;3;3
+IronGloves;Equipment;3;3
+IronSword;Equipment;3;3
+BlueCommendation;Consumable;15;15
+PurpleCommendation;Consumable;1;1
+NightfeatherHeels;Equipment;3;3
+NightfeatherBlade;Equipment;3;3
+NightfeatherPendant;Equipment;3;3
