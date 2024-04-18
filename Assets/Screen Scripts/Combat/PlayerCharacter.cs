@@ -92,9 +92,16 @@ public class Player : EntityBase
             }
         }
 
+        foreach (Learnset item in classData.learnset)
+        {
+            IAttack attack = attackMap[item.attackID].GetNewInstance();
+            this.attackList.Add(attack);
+        }
+
         foreach (PlayerDataTactic tactic in PC_Data.tacticList)
         {
-            tactics.Add(TacticFactory.GetTactic(tactic.TacticID, this, attackMap[tactic.AttackID], tactic.argument));
+            IAttack attack = attackList.Find(x => x.attackID.Equals(tactic.AttackID));
+            tactics.Add(TacticFactory.GetTactic(tactic.TacticID, this, attack, tactic.argument));
         }
 
         //tactics.Add(new ITactic.TacticIsAllyLowHP(this, attackMap["HealingChant"], 99));

@@ -16,14 +16,14 @@ MonoBehaviour:
   enemyID: WhiteSnake10
   isEnemy: 1
   icon: {fileID: 1779635896, guid: 4dc56acd1cff0534e8bfd20504d46c17, type: 3}
-  level: 1
+  level: 10
   baseHP: 500
   HPGrowth: 100
   baseAttack: 50
   attackGrowth: 10
   baseDefense: 15
   defenseGrowth: 0
-  baseSpeed: 134
+  baseSpeed: 85
   speedGrowth: 1
   baseMaxMP: 100
   baseStartingMP: 100

@@ -27,13 +27,16 @@ public class TitleScreen : MonoBehaviour
     {
         saveData = LoadData();
         attackMap = new Dictionary<string, IAttack>();
-        attackMap.Add("BasicAttack", new AttackBasicAttack());
-        attackMap.Add("HealingChant", new AttackHealingChant());
-        attackMap.Add("AssassinStrike", new AttackAssassinStrike());
-        attackMap.Add("TangleStrike", new AttackTangleStrike());
-        attackMap.Add("PoisonStrike", new AttackPoisonStrike());
-        attackMap.Add("SwordsDance", new AttackSwordsDance());
-        attackMap.Add("BlessingOfZeal", new AttackBlessingOfZeal());
+
+        PopulateAttackList();
+        //attackMap.Add("BasicAttack", new AttackBasicAttack());
+        //attackMap.Add("HealingChant", new AttackHealingChant());
+        //attackMap.Add("AssassinStrike", new AttackAssassinStrike());
+        //attackMap.Add("TangleStrike", new AttackTangleStrike());
+        //attackMap.Add("PoisonStrike", new AttackPoisonStrike());
+        //attackMap.Add("SwordsDance", new AttackSwordsDance());
+        //attackMap.Add("BlessingOfZeal", new AttackBlessingOfZeal());
+
 
         tacticMap = new Dictionary<string, int>();
         tacticMap.Add("Default", 0);
@@ -96,6 +99,17 @@ public class TitleScreen : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
+
+    public void PopulateAttackList()
+    {
+        List<IAttack> tempLoadData = new List<IAttack>();
+        IAttack[] assetNames = Resources.LoadAll<AttackBasicAttack>("Attacks");
+        foreach (IAttack asset in assetNames)
+        {
+            attackMap.Add(asset.attackID, asset);
+        }
+    }
+
     public List<PlayerCharacterClass> PopulateClassList()
     {
         List<PlayerCharacterClass> tempLoadData = new List<PlayerCharacterClass>();

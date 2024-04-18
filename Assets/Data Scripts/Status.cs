@@ -33,8 +33,8 @@ public interface IStatus
 
         public void AtEndOfTurn()
         {
-            Debug.Log(entity.getEntityName() + " is taking " + argument.ToString() + " poison damage");
-            entity.TakeTrueDamage(argument);
+            //Debug.Log(entity.getEntityName() + " is taking " + argument.ToString() + " poison damage");
+            entity.TakePoisonDamage(argument);
             this.argument = argument / 2;
             this.ReduceDuration(1);
         }

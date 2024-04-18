@@ -32,7 +32,7 @@ MonoBehaviour:
   learnset:
   - attackID: BasicAttack
     learnLevel: 1
+  - attackID: PoisonStrike
+    learnLevel: 2
   - attackID: TangleStrike
     learnLevel: 5
-  - attackID: PoisonStrike
-    learnLevel: 8

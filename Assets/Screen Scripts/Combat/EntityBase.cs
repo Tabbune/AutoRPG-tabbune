@@ -292,4 +292,13 @@ public class EntityBase : MonoBehaviour
         //CombatUI.UpdateHealthbar(this);
     }
 
+    public void TakePoisonDamage(float baseDamage)
+    {
+        this.currentHP -= Mathf.FloorToInt(baseDamage);
+        //Debug.Log("Taking " + Mathf.FloorToInt(baseDamage).ToString() + " damage, HP remaning: " + currentHP.ToString());
+        //CombatLoop.AddNewLine(this.entityName + " takes " + Mathf.FloorToInt(baseDamage).ToString() + " damage, HP remaning: " + currentHP.ToString());
+        CombatLoop.AddNewLine(this.entityName + " takes " + Mathf.FloorToInt(baseDamage).ToString() + " poison damage");
+        //CombatUI.UpdateHealthbar(this);
+    }
+
 }
