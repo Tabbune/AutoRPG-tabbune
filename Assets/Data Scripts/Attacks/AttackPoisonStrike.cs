@@ -10,8 +10,9 @@ public class AttackPoisonStrike : AttackBasicAttack
     {
         source.DeclareAttack(source.getEntityName() + " uses " + this.attackName);
         source.DealDamage(target, 50f);
-        Debug.Log("Applying poison: " + Mathf.FloorToInt(source.CurrentAttack() * 0.5f).ToString());
+        //Debug.Log("Applying poison: " + Mathf.FloorToInt(source.CurrentAttack() * 0.5f).ToString());
         target.ReceiveStatus("StatusPoison", Mathf.FloorToInt(source.CurrentAttack() * 0.5f), 4);
+        source.DeclareAttack(target.getEntityName() + " is Poisoned");
         cooldownTimer = 0;
     }
 

@@ -107,6 +107,10 @@ public class EntityBase : MonoBehaviour
     {
         return MPRegen;
     }
+    public List<IAttack> GetAttackList()
+    {
+        return attackList;
+    }
 
     public void SetEntityName(string name)
     {
@@ -187,17 +191,18 @@ public class EntityBase : MonoBehaviour
         GainMP(GetMPRegen());
     }
 
-    public void ReceiveStatus(string statusName, int argument, int duration)
+    public void ReceiveStatus(string statusID, int argument, int duration)
     {
         foreach(IStatus status in statusList)
         {
-            if(status.statusName == statusName)
+            if(status.statusID == statusID)
             {
                 status.updateStatus(argument, duration);
                 return;
             }
         }
-        IStatus newStatus = StatusFactory.GetStatus(statusName, this, argument, duration);
+        IStatus newStatus = StatusFactory.GetStatus(statusID, this, argument, duration);
+        CombatUI.AddStatus(this, newStatus);
         statusList.Add(newStatus);
     }
 

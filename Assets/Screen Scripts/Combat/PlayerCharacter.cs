@@ -11,6 +11,7 @@ public class Player : EntityBase
     // Start is called before the first frame update
 
     public PlayerCharacterClass classData;
+    public List<BonusStatusEffects> bonusEffects;
 
     void Awake()
     {
@@ -87,7 +88,7 @@ public class Player : EntityBase
                 EquipmentItem equip = equipmentItemMap[PC_Data.equipments[i]];
                 foreach (BonusStatusEffects bonusStatus in equip.bonusEffects)
                 {
-                    this.ReceiveStatus(bonusStatus.statusID, bonusStatus.argument, bonusStatus.duration);
+                    this.bonusEffects.Add(bonusStatus);
                 }
             }
         }

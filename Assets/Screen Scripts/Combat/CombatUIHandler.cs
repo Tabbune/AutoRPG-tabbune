@@ -86,6 +86,11 @@ public class CombatUIHandler : MonoBehaviour
         EntityDetail entityDetail = entityList[entity.getEntityName()];
         entityDetail.UpdateMPBar(entity);
     }
+    public void AddStatus(EntityBase entity, IStatus status)
+    {
+        EntityDetail entityDetail = entityList[entity.getEntityName()];
+        entityDetail.AddStatus(entity, status);
+    }
 
     public void ProcessDeath_UI(EntityBase entity)
     {

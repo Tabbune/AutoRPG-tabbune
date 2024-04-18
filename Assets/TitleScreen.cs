@@ -11,6 +11,7 @@ using static ITactic;
 public class TitleScreen : MonoBehaviour
 {
     public static Dictionary<string, IAttack> attackMap;
+    public static Dictionary<string, IStatus> statusMap;
     public static Dictionary<string, int> tacticMap;
     public static Dictionary<int, string> tacticMap2;
     public static List<string> teamList;
@@ -27,8 +28,11 @@ public class TitleScreen : MonoBehaviour
     {
         saveData = LoadData();
         attackMap = new Dictionary<string, IAttack>();
+        statusMap = new Dictionary<string, IStatus>();
 
         PopulateAttackList();
+
+        PopulateStatusList();
         //attackMap.Add("BasicAttack", new AttackBasicAttack());
         //attackMap.Add("HealingChant", new AttackHealingChant());
         //attackMap.Add("AssassinStrike", new AttackAssassinStrike());
@@ -107,6 +111,16 @@ public class TitleScreen : MonoBehaviour
         foreach (IAttack asset in assetNames)
         {
             attackMap.Add(asset.attackID, asset);
+        }
+    }
+
+    public void PopulateStatusList()
+    {
+        List<IStatus> tempLoadData = new List<IStatus>();
+        IStatus[] assetNames = Resources.LoadAll<StatusEmpty>("Status");
+        foreach (IStatus asset in assetNames)
+        {
+            statusMap.Add(asset.statusID, asset);
         }
     }
 

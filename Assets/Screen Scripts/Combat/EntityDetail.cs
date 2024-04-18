@@ -14,11 +14,16 @@ public class EntityDetail : MonoBehaviour
     
     private bool isEnemy;
 
+    private EntityBase entity;
+
     public TMP_Text EntityName;
     public TMP_Text HPNumber;
     public Slider HPBar;
     public TMP_Text MPNumber;
     public Slider MPBar;
+
+    public AttackListEntry attackListEntryPrefab;
+    public StatusListEntry statusListEntryPrefab;
 
     // Start is called before the first frame update
     void Awake()
@@ -43,12 +48,39 @@ public class EntityDetail : MonoBehaviour
 
     public void LoadCharacter(EntityBase entity)
     {
+        this.entity = entity;
         //Debug.Log("New Character Detail: " + player.getEntityName());
-        EntityName.SetText("Lv. " + entity.getLevel() + " " + entity.getEntityName());
-        isEnemy = entity.isEnemy;
+        EntityName.SetText("Lv. " + this.entity.getLevel() + " " + this.entity.getEntityName());
+        isEnemy = this.entity.isEnemy;
 
-        UpdateHPBar(entity);
+        if (!isEnemy)
+        {
+            GameObject attackList = this.transform.GetChild(4).transform.GetChild(0).GetChild(0).gameObject;
+            foreach (IAttack attack in this.entity.GetAttackList())
+            {
+                AttackListEntry attackListEntry = Instantiate(attackListEntryPrefab, attackList.transform);
+                attackListEntry.LoadData(attack);
+            }
+        }
+
+        UpdateHPBar(this.entity);
     }
+
+    public void AddStatus(EntityBase entity, IStatus status)
+    {
+        GameObject statusList;
+        if (entity.isEnemy)
+        {
+            statusList = this.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+        }
+        else
+        {
+            statusList = this.transform.GetChild(3).GetChild(0).GetChild(0).gameObject;
+        }
+        StatusListEntry statusListEntry = Instantiate(statusListEntryPrefab, statusList.transform);
+        statusListEntry.LoadData(status);
+    }
+
     public void UpdateHPBar(EntityBase entity)
     {
         if (entity.isEnemy)
@@ -84,9 +116,4 @@ public class EntityDetail : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -7,6 +7,8 @@ using static TitleScreen;
 using TMPro;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.SceneManagement;
+using System.Xml.Linq;
+using Unity.VisualScripting;
 
 public class CombatLoop : MonoBehaviour
 {
@@ -57,6 +59,11 @@ public class CombatLoop : MonoBehaviour
             entityList.Add(newPC);
 
             CombatUI.CreateNewCharacterDetail(newPC);
+
+            foreach(BonusStatusEffects bonusStatus in newPC.bonusEffects)
+            {
+                newPC.ReceiveStatus(bonusStatus.statusID, bonusStatus.argument, bonusStatus.duration);
+            }
             //Debug.Log("newPC speed: " + newPC.CurrentSpeed());
         }
 
