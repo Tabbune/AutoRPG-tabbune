@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CombatUIHandler : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class CombatUIHandler : MonoBehaviour
     public EntityDetail characterDetailPrefab;
     public EntityDetail bossDetailPrefab;
 
+    private bool isGamePaused;
+    private GameObject pauseButton;
+    public Sprite pauseIcon;
+    public Sprite resumeIcon;
+
     void Awake()
     {
         displayedLines = new List<string>();
@@ -31,6 +38,8 @@ public class CombatUIHandler : MonoBehaviour
         GameObject AVTrackerContainer = GameObject.Find("AVTracker");
         AVTracker = AVTrackerContainer.GetComponent<TMP_Text>();
 
+        pauseButton = GameObject.Find("PauseButton");
+        isGamePaused = false;
     }
 
     public void CreateNewCharacterDetail(Player player)
@@ -86,21 +95,59 @@ public class CombatUIHandler : MonoBehaviour
         EntityDetail entityDetail = entityList[entity.getEntityName()];
         entityDetail.UpdateMPBar(entity);
     }
+    public void UpdateAttack(EntityBase entity, IAttack attack)
+    {
+        EntityDetail entityDetail = entityList[entity.getEntityName()];
+        entityDetail.UpdateAttackIcon(attack);
+    }
     public void AddStatus(EntityBase entity, IStatus status)
     {
         EntityDetail entityDetail = entityList[entity.getEntityName()];
         entityDetail.AddStatus(entity, status);
     }
+    public void UpdateStatus(EntityBase entity, IStatus status)
+    {
+        EntityDetail entityDetail = entityList[entity.getEntityName()];
+        entityDetail.UpdateStatusIcon(status);
+    }
 
+    public void DeleteStatus(EntityBase entity, IStatus status)
+    {
+        EntityDetail entityDetail = entityList[entity.getEntityName()];
+        entityDetail.DeleteStatusIcon(status);
+    }
     public void ProcessDeath_UI(EntityBase entity)
     {
         EntityDetail entityDetail = entityList[entity.getEntityName()];
         entityDetail.ProcessDeath_UI();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TogglePause()
     {
-        
+        if (!isGamePaused)
+        {
+            PauseGame();
+            return;
+        }
+        UnpauseGame();
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        pauseButton.transform.GetChild(0).GetComponent<Image>().sprite = resumeIcon;
+        isGamePaused = true;
+    }
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1f;
+        pauseButton.transform.GetChild(0).GetComponent<Image>().sprite = pauseIcon;
+        isGamePaused = false;
+    }
+
+    public void ReturnToMenu()
+    {
+        UnpauseGame();
+        SceneManager.LoadScene("Menu");
     }
 }

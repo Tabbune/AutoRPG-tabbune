@@ -156,6 +156,7 @@ public class PlayerCharacterEditorData : MonoBehaviour
     public string printProfile()
     {
         string profile = "";
+        profile += getClassName() + "\r\n";
         profile += "Level: " + getLevel().ToString() + "\r\n";
 
         profile += "HP: " + HP.ToString() + "\r\n";

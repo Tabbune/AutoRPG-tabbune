@@ -93,15 +93,21 @@ public class Player : EntityBase
             }
         }
 
-        foreach (Learnset item in classData.learnset)
-        {
-            IAttack attack = attackMap[item.attackID].GetNewInstance();
-            this.attackList.Add(attack);
-        }
+        //foreach (Learnset item in classData.learnset)
+        //{
+        //    if(item.learnLevel > this.getLevel()) { continue; }
+        //    IAttack attack = attackMap[item.attackID].GetNewInstance();
+        //    this.attackList.Add(attack);
+        //}
 
         foreach (PlayerDataTactic tactic in PC_Data.tacticList)
         {
             IAttack attack = attackList.Find(x => x.attackID.Equals(tactic.AttackID));
+            if(attack == null)
+            {
+                attack = attackMap[tactic.AttackID].GetNewInstance();
+                attackList.Add(attack);
+            }
             tactics.Add(TacticFactory.GetTactic(tactic.TacticID, this, attack, tactic.argument));
         }
 

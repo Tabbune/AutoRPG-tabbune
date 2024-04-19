@@ -179,7 +179,10 @@ public class EntityBase : MonoBehaviour
             //Debug.Log("Entity " + this.entityName + " is using tactic: " + tactic.tacticName + " with attack " + tactic.attack.attackID);
             //CombatLoop.AddNewLine("Entity " + this.entityName + " is using tactic: " + tactic.tacticName + " with attack " + tactic.attack.attackID);
             success = tactic.invokeTactic(this, target);
-            if (success) { break; }
+            if (success) {
+                CombatUI.UpdateAttack(this, tactic.attack);
+                break; 
+            }
         }
         if (!success) { 
             //Debug.Log("No applicable tactic");
@@ -198,6 +201,7 @@ public class EntityBase : MonoBehaviour
             if(status.statusID == statusID)
             {
                 status.updateStatus(argument, duration);
+                CombatUI.UpdateStatus(this, status);
                 return;
             }
         }
@@ -210,7 +214,10 @@ public class EntityBase : MonoBehaviour
     {
         foreach(IAttack attack in attackList)
         {
-            if(attack.cooldownTimer < attack.cooldown) { attack.cooldownTimer++; }
+            if(attack.cooldownTimer < attack.cooldown) { 
+                attack.cooldownTimer++;
+                CombatUI.UpdateAttack(this, attack);
+            }
         }
     }
 
@@ -227,9 +234,12 @@ public class EntityBase : MonoBehaviour
     {
         for(int i = statusList.Count - 1; i >= 0; i--)
         {
-            statusList[i].AtEndOfTurn();
-            if(statusList[i].duration <= 0)
+            IStatus status = statusList[i];
+            status.AtEndOfTurn();
+            CombatUI.UpdateStatus(this, status);
+            if(status.duration <= 0)
             {
+                CombatUI.DeleteStatus(this, status);
                 statusList.RemoveAt(i);
             }
         }

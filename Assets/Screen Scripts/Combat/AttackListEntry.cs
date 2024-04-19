@@ -20,12 +20,26 @@ public class AttackListEntry : MonoBehaviour
     {
         this.attack = attack;
         this.transform.GetChild(0).GetComponent<Image>().sprite = this.attack.abilityIcon;
-        //UpdateCooldown();
+        UpdateCooldown();
     }
 
     public void UpdateCooldown()
     {
         int cooldown = attack.cooldown - attack.cooldownTimer;
-        this.transform.GetChild(1).GetComponent<TMP_Text>().SetText(cooldown.ToString());
+        TMP_Text text = this.transform.GetChild(1).GetComponent<TMP_Text>();
+        Image icon = this.transform.GetChild(0).GetComponent<Image>();
+        Color color = icon.color;
+        if (cooldown > 0)
+        {
+            color.a = 0.5f;
+            text.alpha = 1f;
+        }
+        else
+        {
+            color.a = 1f;
+            text.alpha = 0f;
+        }
+        icon.color = color;
+        text.SetText(cooldown.ToString());
     }
 }

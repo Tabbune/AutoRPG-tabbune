@@ -24,6 +24,8 @@ public class EntityDetail : MonoBehaviour
 
     public AttackListEntry attackListEntryPrefab;
     public StatusListEntry statusListEntryPrefab;
+    private List<AttackListEntry> attackList;
+    private List<StatusListEntry> statusList;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,6 +46,8 @@ public class EntityDetail : MonoBehaviour
         };
 
         isEnemy = false;
+        attackList = new List<AttackListEntry>();
+        statusList = new List<StatusListEntry>();
     }
 
     public void LoadCharacter(EntityBase entity)
@@ -55,11 +59,12 @@ public class EntityDetail : MonoBehaviour
 
         if (!isEnemy)
         {
-            GameObject attackList = this.transform.GetChild(4).transform.GetChild(0).GetChild(0).gameObject;
+            GameObject attackListObject = this.transform.GetChild(4).transform.GetChild(0).GetChild(0).gameObject;
             foreach (IAttack attack in this.entity.GetAttackList())
             {
-                AttackListEntry attackListEntry = Instantiate(attackListEntryPrefab, attackList.transform);
+                AttackListEntry attackListEntry = Instantiate(attackListEntryPrefab, attackListObject.transform);
                 attackListEntry.LoadData(attack);
+                attackList.Add(attackListEntry);
             }
         }
 
@@ -68,17 +73,18 @@ public class EntityDetail : MonoBehaviour
 
     public void AddStatus(EntityBase entity, IStatus status)
     {
-        GameObject statusList;
+        GameObject statusListObject;
         if (entity.isEnemy)
         {
-            statusList = this.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
+            statusListObject = this.transform.GetChild(2).GetChild(0).GetChild(0).gameObject;
         }
         else
         {
-            statusList = this.transform.GetChild(3).GetChild(0).GetChild(0).gameObject;
+            statusListObject = this.transform.GetChild(3).GetChild(0).GetChild(0).gameObject;
         }
-        StatusListEntry statusListEntry = Instantiate(statusListEntryPrefab, statusList.transform);
+        StatusListEntry statusListEntry = Instantiate(statusListEntryPrefab, statusListObject.transform);
         statusListEntry.LoadData(status);
+        statusList.Add(statusListEntry);
     }
 
     public void UpdateHPBar(EntityBase entity)
@@ -106,6 +112,25 @@ public class EntityDetail : MonoBehaviour
             MPNumber.SetText(entity.getCurrentMP().ToString() + " / " + entity.getCurrentMaxMP().ToString());
         }
         MPBar.value = Mathf.Max(entity.getCurrentMPRatio(), 0f) / 100f;
+    }
+
+    public void UpdateAttackIcon(IAttack attack)
+    {
+        if (isEnemy) { return; }
+        AttackListEntry updatingAttack = attackList.Find(x => x.attack.attackID == attack.attackID);
+        updatingAttack.UpdateCooldown();
+    }
+    public void UpdateStatusIcon(IStatus status)
+    {
+        StatusListEntry updatingStatus = statusList.Find(x => x.status.statusID == status.statusID);
+        updatingStatus.UpdateCooldown();
+    }
+    public void DeleteStatusIcon(IStatus status)
+    {
+        StatusListEntry updatingStatus = statusList.Find(x => x.status.statusID == status.statusID);
+        //updatingStatus.gameObject.SetActive(false);
+        Destroy(updatingStatus.gameObject);
+        statusList.Remove(updatingStatus);
     }
 
     public void ProcessDeath_UI()
